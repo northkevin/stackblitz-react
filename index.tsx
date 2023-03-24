@@ -4,11 +4,15 @@ import { createRoot } from 'react-dom/client';
 
 import App from './App';
 
+import { QueryClient, QueryClientProvider } from 'react-query';
+
 const rootElement = document.getElementById('root');
 const root = createRoot(rootElement);
 
 root.render(
   <StrictMode>
-    <App />
+    <QueryClientProvider client={queryClient}>
+      <App />
+    </QueryClientProvider>
   </StrictMode>
 );
