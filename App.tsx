@@ -3,17 +3,23 @@ import './style.css';
 
 import axios from 'axios';
 import { useQuery } from 'react-query';
-import axios from 'axios';
 
 export default function App() {
-  async function fetchPosts() {
-    const { data } = await axios.get(
-      'https://jsonplaceholder.typicode.com/posts'
-    );
-    return data;
+  function usePosts() {
+    return useQuery({
+      queryKey: ['posts'],
+      queryFn: async () => {
+        const { data } = await axios.get(
+          'https://jsonplaceholder.typicode.com/posts'
+        );
+        return data;
+      },
+    });
   }
 
-  const { data, error, isError, isLoading } = useQuery('posts', fetchPosts);
+  const { data, error, isError, isLoading } = usePosts();
+
+  console.log({ data, error, isError, isLoading });
   // first argument is a string to cache and track the query result
   if (isLoading) {
     return <div>Loading...</div>;
